@@ -1,6 +1,3 @@
-# Ejercicio 10 - Parser de archivos de log
-
-
 def parse_log(filename):
     """
     Lee un archivo de log donde cada línea tiene el formato:
@@ -42,4 +39,22 @@ def parse_log(filename):
             "WARN": ["lento"],
         }
     """
-    pass  # Reemplazar con tu implementación
+    with open(filename, 'r', encoding='utf-8') as f:
+        lines = f.readlines()
+
+    result = {}
+
+    for line in lines:
+        line = line.strip()
+        if not line:
+            continue
+        if ':' not in line:
+            raise ValueError("invalid log line")
+        level, message = line.split(':', 1)
+        level = level.strip()
+        message = message.strip()
+        if level not in result:
+            result[level] = []
+        result[level].append(message)
+
+    return result
