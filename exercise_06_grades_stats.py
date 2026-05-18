@@ -1,6 +1,3 @@
-# Ejercicio 6 - Estadísticas de notas por estudiante
-
-
 def grades_stats(filename):
     """
     Lee un archivo donde cada línea tiene el formato:
@@ -34,4 +31,17 @@ def grades_stats(filename):
             "Cami": (10.0, 10.0, 10.0),
         }
     """
-    pass  # Reemplazar con tu implementación
+    with open(filename, 'r', encoding='utf-8') as f:
+        lines = f.readlines()
+
+    result = {}
+
+    for line in lines:
+        line = line.strip()
+        if not line:
+            continue
+        student, raw_grades = line.split(':')
+        grades = [float(g.strip()) for g in raw_grades.split(',')]
+        result[student.strip()] = (sum(grades) / len(grades), max(grades), min(grades))
+
+    return result
