@@ -1,6 +1,3 @@
-# Ejercicio 3 - Ventas por producto
-
-
 def read_sales(filename):
     """
     Lee un archivo con ventas en formato "producto:valor;producto:valor;..."
@@ -31,7 +28,26 @@ def read_sales(filename):
             "producto2": [200.0],
         }
     """
-    pass  # Reemplazar con tu implementación
+    with open(filename, 'r', encoding='utf-8') as f:
+        content = f.read().strip()
+
+    sales = {}
+
+    if not content:
+        return sales
+
+    for entry in content.split(';'):
+        entry = entry.strip()
+        if not entry:
+            continue
+        product, amount = entry.split(':')
+        product = product.strip()
+        amount = float(amount.strip())
+        if product not in sales:
+            sales[product] = []
+        sales[product].append(amount)
+
+    return sales
 
 
 def process_sales(data):
@@ -53,4 +69,7 @@ def process_sales(data):
         process_sales({"producto1": [100.0, 150.0]})
         # imprime: "producto1: ventas totales $250.00, promedio $125.00"
     """
-    pass  # Reemplazar con tu implementación
+    for product, amounts in data.items():
+        total = sum(amounts)
+        average = total / len(amounts)
+        print(f"{product}: ventas totales ${total:.2f}, promedio ${average:.2f}")
