@@ -1,6 +1,3 @@
-# Ejercicio 9 - Combinar dos archivos
-
-
 def merge_files(file1, file2, output):
     """
     Lee file1 y file2 y escribe su concatenación (primero file1, luego
@@ -32,4 +29,9 @@ def merge_files(file1, file2, output):
         # hola
         # mundo
     """
-    pass  # Reemplazar con tu implementación
+    content1 = open(file1, 'r', encoding='utf-8').read()
+    content2 = open(file2, 'r', encoding='utf-8').read()
+
+    with open(output, 'w', encoding='utf-8') as f:
+        f.write(content1)
+        f.write(content2)
