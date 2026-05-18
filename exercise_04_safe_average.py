@@ -1,6 +1,3 @@
-# Ejercicio 4 - Promedio seguro con manejo de errores
-
-
 def safe_average(filename):
     """
     Lee un archivo donde hay UN número por línea y retorna el promedio de
@@ -28,4 +25,17 @@ def safe_average(filename):
         # archivo contiene: "10\n20\nno_es_un_numero\n30\n"
         safe_average("numeros.txt") -> 20.0
     """
-    pass  # Reemplazar con tu implementación
+    with open(filename, 'r', encoding='utf-8') as f:
+        lines = f.readlines()
+
+    numbers = []
+    for line in lines:
+        try:
+            numbers.append(float(line.strip()))
+        except ValueError:
+            continue
+
+    if not numbers:
+        raise ValueError("no valid numbers")
+
+    return sum(numbers) / len(numbers)
